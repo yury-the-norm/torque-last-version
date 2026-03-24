@@ -46,7 +46,7 @@ export default function JournalScreen({ onStartWorkout, onOpenDetail, activeTab,
 
           {/* Title: Teko 32px #F04E23 */}
           <div style={{ fontFamily:'Teko,sans-serif', fontSize:32, fontWeight:400,
-            color:'#F04E23', lineHeight:'36px' }}>My Journal</div>
+            color:'#F04E23', lineHeight:'36px', textTransform:'uppercase' }}>My Journal</div>
 
           {/* Chart card: w=370 r=8 bg=#1C1D21 p l=8 r=8 t=16 b=16 gap=16 */}
           <div style={{ width:"100%", borderRadius:8, background:'#1C1D21',

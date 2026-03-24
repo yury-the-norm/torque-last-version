@@ -63,7 +63,7 @@ export default function NotificationsScreen({ onReconnect, activeTab, onTabChang
                 Notifications
               </div>
               {unread > 0 && (
-                <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
+                <div style={{ fontFamily:'Inter,sans-serif', fontSize:14, fontWeight:300,
                   color:'rgba(255,255,255,0.4)' }}>{unread} unread</div>
               )}
             </div>
@@ -110,9 +110,9 @@ export default function NotificationsScreen({ onReconnect, activeTab, onTabChang
                     <Icon size={16} color={n.color}/>
                   </div>
                   <div style={{ flex:1, minWidth:0 }}>
-                    <div style={{ fontFamily:'Inter,sans-serif', fontSize:13, fontWeight: n.read ? 400 : 500,
+                    <div style={{ fontFamily:'Inter,sans-serif', fontSize:15, fontWeight: n.read ? 400 : 500,
                       color: n.read ? 'rgba(255,255,255,0.6)' : '#fff', marginBottom:3 }}>{n.title}</div>
-                    <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
+                    <div style={{ fontFamily:'Inter,sans-serif', fontSize:14, fontWeight:300,
                       color:'rgba(255,255,255,0.4)', lineHeight:1.4 }}>{n.body}</div>
                     {isDisconnect && !n.read && (
                       <div style={{

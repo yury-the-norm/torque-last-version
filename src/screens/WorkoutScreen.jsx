@@ -230,15 +230,15 @@ function SessionDetailPopup({ deviceName, chartRef, forceRef, hrRef, onClose, on
         style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.55)',
           backdropFilter:'blur(6px)', zIndex:48, borderRadius:44 }}/>
 
-      {/* Sheet — 75% of screen height = ~655px of 874px frame */}
+      {/* Sheet — на маленьких экранах почти весь экран */}
       <motion.div
         initial={{ y:'100%' }} animate={{ y:0 }} exit={{ y:'100%' }}
         transition={{ type:'spring', stiffness:340, damping:34 }}
         style={{
           position:'absolute', left:0, right:0, bottom:0,
-          height:'75%',              /* 75% of 874px ≈ 655px */
+          height: window.innerWidth < 480 ? '92%' : '75%',
           background:'#111214',
-          borderRadius:'20px 20px 44px 44px',
+          borderRadius:'20px 20px 0 0',
           zIndex:50,
           display:'flex', flexDirection:'column',
           overflow:'hidden',
@@ -271,43 +271,40 @@ function SessionDetailPopup({ deviceName, chartRef, forceRef, hrRef, onClose, on
           </div>
         </div>
 
-        {/* Chart — 2× taller than before: 160px */}
+        {/* Chart — фиксированный */}
         <div style={{ padding:'0 16px 10px', flexShrink:0 }}>
-          <ChartSVG data={liveChart} width={370} height={160}/>
+          <ChartSVG data={liveChart} width={window.innerWidth < 480 ? window.innerWidth - 32 : 370} height={window.innerWidth < 480 ? 120 : 160}/>
         </div>
 
-        {/* Metrics 2×3 grid — bigger tiles */}
-        <div style={{ padding:'0 16px', flexShrink:0,
-          display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-          {METRICS.map((row, ri) => row.map((m, ci) => (
-            <div key={`${ri}-${ci}`} style={{ background:'#1C1D21', borderRadius:10,
-              padding:'12px 14px' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:4, marginBottom:4 }}>
-                <span style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
-                  color:'rgba(255,255,255,0.45)' }}>{m.label}</span>
-                {m.fire && <span style={{ fontSize:10 }}>🔥</span>}
+        {/* Metrics — скроллятся если не влезают */}
+        <div className="scroll" style={{ flex:1, overflowY:'auto', padding:'0 16px 8px' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
+            {METRICS.map((row, ri) => row.map((m, ci) => (
+              <div key={`${ri}-${ci}`} style={{ background:'#1C1D21', borderRadius:10,
+                padding:'12px 14px' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:4, marginBottom:4 }}>
+                  <span style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
+                    color:'rgba(255,255,255,0.45)' }}>{m.label}</span>
+                  {m.fire && <span style={{ fontSize:10 }}>🔥</span>}
+                </div>
+                <motion.div key={m.value} initial={{ opacity:0.6,y:-2 }} animate={{ opacity:1,y:0 }}
+                  style={{ fontFamily:'Space Mono,monospace',
+                    fontSize: window.innerWidth < 480 ? 28 : 36,
+                    fontWeight:400, color:'#fff', lineHeight:1 }}>
+                  {m.value}
+                </motion.div>
               </div>
-              <motion.div key={m.value} initial={{ opacity:0.6,y:-2 }} animate={{ opacity:1,y:0 }}
-                style={{ fontFamily:'Space Mono,monospace', fontSize:36, fontWeight:400,
-                  color:'#fff', lineHeight:1 }}>
-                {m.value}
-              </motion.div>
-            </div>
-          )))}
+            )))}
+          </div>
         </div>
 
-        {/* Spacer pushes button down */}
-        <div style={{ flex:1 }}/>
-
-        {/* Pause notice */}
-        <div style={{ padding:'8px 20px 6px', flexShrink:0,
-          fontFamily:'Inter,sans-serif', fontSize:12,
-          fontWeight:300, color:'rgba(255,255,255,0.35)' }}>
-          Pause after 5 seconds without movement.
-        </div>
-
-        {/* End session button */}
-        <div style={{ padding:'0 16px', flexShrink:0 }}>
+        {/* End session — всегда прибита к низу */}
+        <div style={{ flexShrink:0, padding:'8px 16px 0',
+          borderTop:'1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
+            color:'rgba(255,255,255,0.35)', marginBottom:8, textAlign:'center' }}>
+            Pause after 5 seconds without movement.
+          </div>
           <motion.button onClick={onEndSession} whileTap={{ scale:0.97 }}
             style={{ width:'100%', height:44, borderRadius:6,
               background:'rgba(240,78,35,0.12)', border:'1px solid rgba(240,78,35,0.4)',
@@ -317,12 +314,9 @@ function SessionDetailPopup({ deviceName, chartRef, forceRef, hrRef, onClose, on
           </motion.button>
         </div>
 
-        {/* Black safe-area bar — covers home indicator, keeps button visible */}
-        <div style={{ height:34, background:'#111214', flexShrink:0,
-          display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <div style={{ width:144, height:5, borderRadius:100,
-            background:'rgba(255,255,255,0.25)' }}/>
-        </div>
+        {/* Safe area */}
+        <div style={{ height:'max(env(safe-area-inset-bottom, 0px), 16px)',
+          flexShrink:0 }}/>
       </motion.div>
     </>
   )
@@ -425,9 +419,9 @@ function LiveSession({ deviceName, onEndSession, onExpand }) {
         </motion.button>
       </div>
 
-      {/* Chart: Figma w=354 h=90 x=8 y=128 */}
+      {/* Chart: responsive height */}
       <div style={{ padding:'0 8px 8px' }}>
-        <ChartSVG data={chartData} width={354} height={90}/>
+        <ChartSVG data={chartData} width={354} height={window.innerWidth < 480 ? 60 : 90}/>
       </div>
 
       {/* Button: "End session" h=44 Figma y=226 */}
@@ -632,24 +626,38 @@ export default function WorkoutScreen({ device, onFinish, onConnectNew }) {
           color:'rgba(255,255,255,0.5)' }}>Workout journal</div>
       </div>
 
-      {/* ── JOURNAL: live session FIRST, then completed ── */}
-      <div className="scroll" style={{
-        position:'absolute', top:'calc(var(--status-h, 54px) + 180px)', left:0, right:0, bottom:146,
-        overflowY:'auto', display:'flex', flexDirection:'column',
-        alignItems:'center', gap:12, padding:'16px 16px' }}>
+      {/* ── JOURNAL ─────────────────────────────────────── */}
+      <div style={{
+        position:'absolute',
+        top:'calc(var(--status-h, 54px) + 180px)',
+        left:0, right:0,
+        bottom:'var(--nav-h, 90px)',
+        display:'flex', flexDirection:'column',
+        overflow:'hidden',
+      }}>
 
-        {/* 🔴 ACTIVE session at top */}
+        {/* 🔴 ACTIVE session — залипает сверху, не скроллится */}
         {liveRunning && (
-          <LiveSession
-            deviceName={deviceName}
-            onEndSession={endSession}
-            onExpand={(state) => setExpanded(state)}/>
+          <div style={{ padding:'16px 16px 0', flexShrink:0 }}>
+            <LiveSession
+              deviceName={deviceName}
+              onEndSession={endSession}
+              onExpand={(state) => setExpanded(state)}/>
+          </div>
         )}
 
-        {/* Completed sessions below */}
-        {sessions.map((s,i) => (
-          <SessionCard key={s.id} session={s} idx={i}/>
-        ))}
+        {/* Completed sessions — скроллятся под активной */}
+        {sessions.length > 0 && (
+          <div className="scroll" style={{
+            flex:1, overflowY:'auto',
+            display:'flex', flexDirection:'column',
+            gap:12, padding:'12px 16px 16px',
+          }}>
+            {sessions.map((s,i) => (
+              <SessionCard key={s.id} session={s} idx={i}/>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── FOOTER ──────────────────────────────────────── */}

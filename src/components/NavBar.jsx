@@ -30,7 +30,7 @@ function TabCell({ tab, active, onClick }) {
         gap: 4, background:'none', border:'none', cursor:'pointer', padding:0,
       }}>
       <img src={tab.icon} alt={tab.label} style={{
-        width:24, height:24,
+        width:20, height:20,
         filter: active
           ? 'invert(42%) sepia(97%) saturate(1300%) hue-rotate(340deg) brightness(105%)'
           : 'invert(1) brightness(0.45)',
@@ -55,7 +55,7 @@ function FABButton({ onClick }) {
         display:'flex', alignItems:'center', justifyContent:'center',
         cursor:'pointer', boxShadow:'none', outline:'none',
       }}>
-      <img src={nfcIcon} alt="NFC" style={{ width:36, height:36, opacity:0.9, display:'block' }}/>
+      <img src={nfcIcon} alt="NFC" style={{ width:43, height:43, opacity:0.9, display:'block' }}/>
     </motion.button>
   )
 }
@@ -128,7 +128,7 @@ export default function NavBar({ active = 'journal', onChange }) {
                 gap:4, background:'none', border:'none', cursor:'pointer', padding:0,
               }}>
               <img src={tab.icon} alt={tab.label} style={{
-                width:24, height:24,
+                width:20, height:20,
                 filter: isActive
                   ? 'invert(42%) sepia(97%) saturate(1300%) hue-rotate(340deg) brightness(105%)'
                   : 'invert(1) brightness(0.45)',
@@ -153,7 +153,7 @@ export default function NavBar({ active = 'journal', onChange }) {
             border:'none', display:'flex', alignItems:'center',
             justifyContent:'center', cursor:'pointer', zIndex:10,
           }}>
-          <img src={nfcIcon} alt="NFC" style={{ width:36, height:36, opacity:0.9, display:'block' }}/>
+          <img src={nfcIcon} alt="NFC" style={{ width:43, height:43, opacity:0.9, display:'block' }}/>
         </motion.button>
       </div>
 

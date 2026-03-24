@@ -13,9 +13,9 @@ const Row = ({ icon:Icon, label, value, onClick, danger }) => (
   }}>
     {Icon && <Icon size={16} color={danger ? '#ef4444' : 'rgba(255,255,255,0.4)'} style={{marginRight:12, flexShrink:0}}/>}
     <div style={{ flex:1 }}>
-      <div style={{ fontFamily:'Inter,sans-serif', fontSize:14, fontWeight:400,
+      <div style={{ fontFamily:'Inter,sans-serif', fontSize:16, fontWeight:400,
         color: danger ? '#ef4444' : '#fff' }}>{label}</div>
-      {value && <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
+      {value && <div style={{ fontFamily:'Inter,sans-serif', fontSize:13, fontWeight:300,
         color:'rgba(255,255,255,0.35)', marginTop:2 }}>{value}</div>}
     </div>
     <ChevronRight size={16} color="rgba(255,255,255,0.2)"/>
@@ -53,9 +53,9 @@ export default function ProfileScreen({ activeTab, onTabChange }) {
               fontFamily:'Teko,sans-serif', fontSize:26, fontWeight:500, color:'#fff',
             }}>JD</div>
             <div>
-              <div style={{ fontFamily:'Teko,sans-serif', fontSize:24, fontWeight:400,
+              <div style={{ fontFamily:'Teko,sans-serif', fontSize:26, fontWeight:400,
                 color:'#fff', letterSpacing:'0.02em' }}>Jane Doe</div>
-              <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:300,
+              <div style={{ fontFamily:'Inter,sans-serif', fontSize:14, fontWeight:300,
                 color:'rgba(255,255,255,0.4)' }}>jane@example.com</div>
             </div>
           </motion.div>
@@ -63,7 +63,7 @@ export default function ProfileScreen({ activeTab, onTabChange }) {
           {/* Account section */}
           <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{delay:0.08}}
             style={{ background:'#1C1D21', borderRadius:12, padding:'0 16px' }}>
-            <div style={{ fontFamily:'Inter,sans-serif', fontSize:10, fontWeight:600,
+            <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:600,
               textTransform:'uppercase', letterSpacing:'0.08em',
               color:'rgba(255,255,255,0.3)', padding:'12px 0 4px' }}>Account</div>
             <Row label="Full name" value="Jane Doe"/>
@@ -75,7 +75,7 @@ export default function ProfileScreen({ activeTab, onTabChange }) {
           {/* Integrations */}
           <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{delay:0.12}}
             style={{ background:'#1C1D21', borderRadius:12, padding:'0 16px' }}>
-            <div style={{ fontFamily:'Inter,sans-serif', fontSize:10, fontWeight:600,
+            <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:600,
               textTransform:'uppercase', letterSpacing:'0.08em',
               color:'rgba(255,255,255,0.3)', padding:'12px 0 4px' }}>Integrations</div>
             <Row icon={Heart} label="Apple Health" value="Connected — syncing workouts"/>
@@ -85,7 +85,7 @@ export default function ProfileScreen({ activeTab, onTabChange }) {
           <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{delay:0.16}}
             style={{ background:'rgba(239,68,68,0.06)', border:'1px solid rgba(239,68,68,0.15)',
               borderRadius:12, padding:'0 16px' }}>
-            <div style={{ fontFamily:'Inter,sans-serif', fontSize:10, fontWeight:600,
+            <div style={{ fontFamily:'Inter,sans-serif', fontSize:12, fontWeight:600,
               textTransform:'uppercase', letterSpacing:'0.08em',
               color:'rgba(239,68,68,0.5)', padding:'12px 0 4px' }}>Danger zone</div>
             <Row icon={Trash2} label="Delete account" value="Permanently remove all data" danger onClick={() => setShowDelete(true)}/>
